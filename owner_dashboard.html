@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block title %}Owner Dashboard – CarCare Mechanic{% endblock %}
+
+{% block content %}
+<div class="dash-header owner-header">
+    <div class="container">
+        <h1><i class="fa-solid fa-screwdriver-wrench"></i> Owner Dashboard</h1>
+        <p>Manage bookings, approvals & track revenue</p>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        <div class="dash-stats" id="ownerStats"></div>
+
+        <div class="owner-tabs">
+            <button class="otab active" data-tab="bookings">All Bookings</button>
+            <button class="otab" data-tab="pending">Pending Approval</button>
+        </div>
+
+        <div class="filter-bar">
+            <button class="filter-btn active" data-status="all">All</button>
+            <button class="filter-btn" data-status="pending">Pending</button>
+            <button class="filter-btn" data-status="confirmed">Confirmed</button>
+            <button class="filter-btn" data-status="completed">Completed</button>
+            <button class="filter-btn" data-status="rejected">Rejected</button>
+        </div>
+
+        <div class="owner-bookings-list" id="ownerBookingsList"></div>
+    </div>
+</section>
+
+<!-- Booking Detail Modal -->
+<div class="modal-overlay" id="bookingDetailModal">
+    <div class="modal modal-lg">
+        <button class="modal-close" onclick="closeModal('bookingDetailModal')">&times;</button>
+        <h2>Booking Details</h2>
+        <div id="bookingDetailBody"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let ownerBookings = [];
+
+async function loadOwnerData() {
+    const me = await fetch('/api/me').then(r=>r.json());
+    if (!me.logged_in || me.role !== 'owner') { window.location='/'; return; }
+
+    const stats = await fetch('/api/owner/stats').then(r=>r.json());
+    document.getElementById('ownerStats').innerHTML = `
+        <div class="dstat-card"><i class="fa-solid fa-calendar"></i><div><span class="dstat-num">${stats.total}</span><span>Total Bookings</span></div></div>
+        <div class="dstat-card warn"><i class="fa-solid fa-clock"></i><div><span class="dstat-num">${stats.pending}</span><span>Pending Approval</span></div></div>
+        <div class="dstat-card info"><i class="fa-solid fa-circle-check"></i><div><span class="dstat-num">${stats.confirmed}</span><span>Confirmed</span></div></div>
+        <div class="dstat-card success"><i class="fa-solid fa-flag-checkered"></i><div><span class="dstat-num">${stats.completed}</span><span>Completed</span></div></div>
+        <div class="dstat-card accent"><i class="fa-solid fa-indian-rupee-sign"></i><div><span class="dstat-num">₹${stats.revenue.toLocaleString()}</span><span>Total Revenue</span></div></div>
+        <div class="dstat-card"><i class="fa-solid fa-users"></i><div><span class="dstat-num">${stats.customers}</span><span>Customers</span></div></div>
+    `;
+
+    ownerBookings = await fetch('/api/owner/bookings').then(r=>r.json());
+    renderOwnerBookings(ownerBookings);
+}
+
+function statusBadge(status) {
+    const map = {
+        pending: ['badge-warn','Pending'],
+        confirmed: ['badge-info','Confirmed'],
+        completed: ['badge-success','Completed'],
+        rejected: ['badge-error','Rejected']
+    };
+    const [cls, label] = map[status] || ['badge-warn', status];
+    return `<span class="badge ${cls}">${label}</span>`;
+}
+
+function renderOwnerBookings(list) {
+    const wrap = document.getElementById('ownerBookingsList');
+    if (list.length === 0) {
+        wrap.innerHTML = `<div class="empty-state"><i class="fa-solid fa-inbox"></i><h3>No bookings found</h3></div>`;
+        return;
+    }
+    wrap.innerHTML = list.map(b => `
+        <div class="owner-booking-card">
+            <div class="obc-left">
+                <div class="obc-customer">
+                    <div class="avatar-circle">${b.customer_name.charAt(0)}</div>
+                    <div>
+                        <strong>${b.customer_name}</strong>
+                        <span>${b.phone} · ${b.email}</span>
+                    </div>
+                </div>
+                <div class="obc-details">
+                    <span><i class="fa-solid fa-wrench"></i> ${b.service_name}</span>
+                    <span><i class="fa-solid fa-car"></i> ${b.car_make} ${b.car_model} (${b.car_year})</span>
+                    <span><i class="fa-solid fa-calendar"></i> ${b.booking_date} at ${b.booking_time}</span>
+                    <span><i class="fa-solid fa-location-dot"></i> ${b.address}</span>
+                </div>
+            </div>
+            <div class="obc-right">
+                <span class="booking-price">₹${b.total_amount.toLocaleString()}</span>
+                ${statusBadge(b.status)}
+                ${b.payment_status === 'paid' ? '<span class="badge badge-success">Paid</span>' : '<span class="badge badge-error">Unpaid</span>'}
+                <div class="obc-actions">
+                    ${b.status === 'pending' ? `
+                        <button class="btn-success btn-sm" onclick="updateStatus(${b.id}, 'confirmed')"><i class="fa-solid fa-check"></i> Accept</button>
+                        <button class="btn-danger btn-sm" onclick="updateStatus(${b.id}, 'rejected')"><i class="fa-solid fa-xmark"></i> Reject</button>
+                    ` : ''}
+                    ${b.status === 'confirmed' ? `
+                        <button class="btn-primary btn-sm" onclick="updateStatus(${b.id}, 'completed')"><i class="fa-solid fa-flag-checkered"></i> Mark Completed</button>
+                    ` : ''}
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+async function updateStatus(id, status) {
+    const resp = await fetch(`/api/owner/booking/${id}/status`, {
+        method: 'PUT', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({status})
+    }).then(r=>r.json());
+    if (resp.success) {
+        showToast(`Booking ${status}!`, 'success');
+        loadOwnerData();
+    }
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const status = this.dataset.status;
+        renderOwnerBookings(status === 'all' ? ownerBookings : ownerBookings.filter(b => b.status === status));
+    });
+});
+
+loadOwnerData();
+</script>
+{% endblock %}

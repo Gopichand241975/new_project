@@ -1,0 +1,280 @@
+{% extends "base.html" %}
+{% block title %}CarCare Mechanic – Expert Car Service at Your Doorstep{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-bg">
+        <div class="hero-gradient"></div>
+        <div class="hero-pattern"></div>
+    </div>
+    <div class="hero-container">
+        <div class="hero-content">
+            <div class="hero-badge"><i class="fa-solid fa-shield-halved"></i> Trusted by 50,000+ Car Owners</div>
+            <h1 class="hero-title">Expert Car Care, <span class="text-gradient">Right at Your Door</span></h1>
+            <p class="hero-subtitle">Certified mechanics, genuine parts, transparent pricing. Book your service in 60 seconds and get your car picked up, serviced & delivered.</p>
+            <div class="hero-stats">
+                <div class="stat"><span class="stat-num">50K+</span><span class="stat-label">Happy Customers</span></div>
+                <div class="stat-divider"></div>
+                <div class="stat"><span class="stat-num">200+</span><span class="stat-label">Services</span></div>
+                <div class="stat-divider"></div>
+                <div class="stat"><span class="stat-num">4.8★</span><span class="stat-label">Rating</span></div>
+                <div class="stat-divider"></div>
+                <div class="stat"><span class="stat-num">30min</span><span class="stat-label">Pickup</span></div>
+            </div>
+            <div class="hero-actions">
+                <a href="/booking" class="btn-primary btn-lg"><i class="fa-solid fa-calendar-check"></i> Book a Service</a>
+                <a href="/services" class="btn-outline-white btn-lg"><i class="fa-solid fa-list"></i> View Services</a>
+            </div>
+        </div>
+        <div class="hero-card">
+            <div class="quick-book-card">
+                <h3><i class="fa-solid fa-bolt"></i> Quick Book</h3>
+                <div class="form-group">
+                    <label>Car Brand</label>
+                    <select id="qb_brand">
+                        <option value="">Select Brand</option>
+                        <option>Maruti Suzuki</option><option>Hyundai</option><option>Honda</option>
+                        <option>Toyota</option><option>Tata</option><option>Mahindra</option>
+                        <option>Kia</option><option>Skoda</option><option>Volkswagen</option><option>BMW</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Service Type</label>
+                    <select id="qb_service">
+                        <option value="">Select Service</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Preferred Date</label>
+                    <input type="date" id="qb_date" min="">
+                </div>
+                <button class="btn-primary btn-full" onclick="quickBook()">
+                    <i class="fa-solid fa-arrow-right"></i> Book Now
+                </button>
+                <p class="qb-note"><i class="fa-solid fa-truck"></i> Free pickup & drop included</p>
+            </div>
+        </div>
+    </div>
+    <div class="hero-scroll">
+        <div class="scroll-indicator"></div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how-works">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-eyebrow">Simple Process</span>
+            <h2>How CarCare Works</h2>
+            <p>Getting your car serviced has never been easier</p>
+        </div>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-num">01</div>
+                <div class="step-icon"><i class="fa-solid fa-car-side"></i></div>
+                <h3>Select Your Service</h3>
+                <p>Choose from 200+ services tailored to your car's needs and budget.</p>
+            </div>
+            <div class="step-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+            <div class="step-card">
+                <div class="step-num">02</div>
+                <div class="step-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                <h3>Schedule Pickup</h3>
+                <p>Pick a convenient date & time. We collect your car from your location for free.</p>
+            </div>
+            <div class="step-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+            <div class="step-card">
+                <div class="step-num">03</div>
+                <div class="step-icon"><i class="fa-solid fa-wrench"></i></div>
+                <h3>Expert Service</h3>
+                <p>Certified mechanics service your car with genuine parts under quality supervision.</p>
+            </div>
+            <div class="step-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+            <div class="step-card">
+                <div class="step-num">04</div>
+                <div class="step-icon"><i class="fa-solid fa-house"></i></div>
+                <h3>Delivered Home</h3>
+                <p>Your freshly serviced car is returned to you, cleaned and ready to go.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICES PREVIEW -->
+<section class="section services-preview">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-eyebrow">What We Do</span>
+            <h2>Popular Services</h2>
+            <p>From routine maintenance to complex repairs — we handle it all</p>
+        </div>
+        <div class="services-grid" id="homeServicesGrid"></div>
+        <div class="text-center mt-40">
+            <a href="/services" class="btn-primary btn-lg">View All Services <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- WHY US -->
+<section class="section why-us">
+    <div class="container">
+        <div class="why-grid">
+            <div class="why-content">
+                <span class="section-eyebrow">Why Choose Us</span>
+                <h2>Car Service You Can Actually Trust</h2>
+                <p>We built CarCare because we were tired of overpriced, opaque car service. Every mechanic is certified. Every part is genuine. Every price is upfront.</p>
+                <div class="why-features">
+                    <div class="why-item">
+                        <div class="why-icon"><i class="fa-solid fa-certificate"></i></div>
+                        <div>
+                            <h4>Certified Mechanics</h4>
+                            <p>All our technicians are factory-trained and certified with minimum 5 years experience.</p>
+                        </div>
+                    </div>
+                    <div class="why-item">
+                        <div class="why-icon"><i class="fa-solid fa-tag"></i></div>
+                        <div>
+                            <h4>Transparent Pricing</h4>
+                            <p>See exact prices before booking. No hidden fees. No surprises when you pay.</p>
+                        </div>
+                    </div>
+                    <div class="why-item">
+                        <div class="why-icon"><i class="fa-solid fa-shield-check"></i></div>
+                        <div>
+                            <h4>Service Warranty</h4>
+                            <p>All services come with a 1000km / 30-day warranty on parts and labour.</p>
+                        </div>
+                    </div>
+                    <div class="why-item">
+                        <div class="why-icon"><i class="fa-solid fa-truck"></i></div>
+                        <div>
+                            <h4>Free Pickup & Drop</h4>
+                            <p>We collect your car and return it. Zero commute hassle for you.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="why-visual">
+                <div class="stat-card-grid">
+                    <div class="stat-big-card accent-1">
+                        <i class="fa-solid fa-users"></i>
+                        <span class="big-num">50K+</span>
+                        <span>Satisfied Customers</span>
+                    </div>
+                    <div class="stat-big-card accent-2">
+                        <i class="fa-solid fa-star"></i>
+                        <span class="big-num">4.8</span>
+                        <span>Average Rating</span>
+                    </div>
+                    <div class="stat-big-card accent-3">
+                        <i class="fa-solid fa-car"></i>
+                        <span class="big-num">1L+</span>
+                        <span>Cars Serviced</span>
+                    </div>
+                    <div class="stat-big-card accent-4">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span class="big-num">25+</span>
+                        <span>Cities Covered</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section testimonials">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-eyebrow">Reviews</span>
+            <h2>What Our Customers Say</h2>
+        </div>
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p>"Booked an AC repair at 9am, they picked up the car by 10am and dropped it back by 3pm. Absolutely flawless service."</p>
+                <div class="reviewer">
+                    <div class="reviewer-avatar">RK</div>
+                    <div><strong>Ravi Kumar</strong><span>Maruti Swift Owner</span></div>
+                </div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p>"Transparent pricing was a breath of fresh air. No upselling, no fake issues. The mechanic explained everything clearly."</p>
+                <div class="reviewer">
+                    <div class="reviewer-avatar">PS</div>
+                    <div><strong>Priya Sharma</strong><span>Hyundai Creta Owner</span></div>
+                </div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">★★★★☆</div>
+                <p>"Got my car fully detailed. It looks brand new. Saved at least ₹3000 compared to what the showroom quoted."</p>
+                <div class="reviewer">
+                    <div class="reviewer-avatar">AM</div>
+                    <div><strong>Arjun Mehta</strong><span>Tata Nexon Owner</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+    <div class="container">
+        <div class="cta-content">
+            <h2>Ready to Give Your Car the Care It Deserves?</h2>
+            <p>Book now and get free pickup from your location</p>
+            <div class="cta-actions">
+                <a href="/booking" class="btn-white btn-lg">Book a Service Now</a>
+                <a href="tel:+919876543210" class="btn-outline-white btn-lg"><i class="fa-solid fa-phone"></i> Call Us</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Load services for quick book
+fetch('/api/services').then(r=>r.json()).then(svcs => {
+    const sel = document.getElementById('qb_service');
+    svcs.forEach(s => {
+        sel.innerHTML += `<option value="${s.id}">${s.name} – ₹${s.price}</option>`;
+    });
+
+    // Home services grid
+    const grid = document.getElementById('homeServicesGrid');
+    svcs.slice(0,8).forEach(s => {
+        grid.innerHTML += `
+        <div class="service-card" onclick="window.location='/booking'">
+            <div class="service-icon"><i class="fas ${s.icon}"></i></div>
+            <div class="service-info">
+                <span class="service-cat">${s.category}</span>
+                <h3>${s.name}</h3>
+                <p>${s.description}</p>
+                <div class="service-meta">
+                    <span class="service-price">₹${s.price.toLocaleString()}</span>
+                    <span class="service-dur"><i class="fa-solid fa-clock"></i> ${s.duration}</span>
+                </div>
+            </div>
+            <button class="btn-primary btn-sm">Book Now</button>
+        </div>`;
+    });
+});
+
+// Set min date for quick book
+const dateInput = document.getElementById('qb_date');
+dateInput.min = new Date().toISOString().split('T')[0];
+
+function quickBook() {
+    const brand = document.getElementById('qb_brand').value;
+    const service = document.getElementById('qb_service').value;
+    const date = document.getElementById('qb_date').value;
+    if (!brand || !service || !date) { showToast('Please fill all fields', 'error'); return; }
+    window.location = `/booking?service=${service}&brand=${encodeURIComponent(brand)}&date=${date}`;
+}
+</script>
+{% endblock %}

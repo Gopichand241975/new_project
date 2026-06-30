@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CarCare Mechanic{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    {% block head %}{% endblock %}
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="/" class="nav-logo">
+            <span class="logo-icon"><i class="fa-solid fa-gear"></i></span>
+            <span class="logo-text">CarCare <span class="accent">Mechanic</span></span>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="/">Home</a></li>
+            <li><a href="/services">Services</a></li>
+            <li><a href="/booking">Book Now</a></li>
+            <li id="dashLink" style="display:none"><a href="/dashboard">Dashboard</a></li>
+        </ul>
+        <div class="nav-actions" id="navActions">
+            <button class="btn-outline" onclick="openModal('loginModal')">Login</button>
+            <button class="btn-primary" onclick="openModal('registerModal')">Sign Up</button>
+        </div>
+        <div class="nav-user" id="navUser" style="display:none">
+            <span id="userGreet"></span>
+            <a href="/dashboard" class="btn-outline btn-sm">Dashboard</a>
+            <button class="btn-ghost btn-sm" onclick="logout()">Logout</button>
+        </div>
+        <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+{% block content %}{% endblock %}
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-brand">
+            <div class="footer-logo">
+                <span class="logo-icon"><i class="fa-solid fa-gear"></i></span>
+                <span>CarCare <span class="accent">Mechanic</span></span>
+            </div>
+            <p>Professional car care at your doorstep. Certified mechanics, genuine parts, transparent pricing.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4>Services</h4>
+            <ul>
+                <li><a href="#">Basic Service</a></li>
+                <li><a href="#">AC Repair</a></li>
+                <li><a href="#">Denting & Painting</a></li>
+                <li><a href="#">Battery Replacement</a></li>
+                <li><a href="#">Car Detailing</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Partners</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Contact</h4>
+            <ul class="contact-list">
+                <li><i class="fa-solid fa-phone"></i> +91 98765 43210</li>
+                <li><i class="fa-solid fa-envelope"></i> support@carcaremechanic.in</li>
+                <li><i class="fa-solid fa-clock"></i> Mon–Sun: 7AM – 9PM</li>
+                <li><i class="fa-solid fa-location-dot"></i> Serving all major cities</li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 CarCare Mechanic. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Refund Policy</a>
+        </div>
+    </div>
+</footer>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginModal">
+    <div class="modal">
+        <button class="modal-close" onclick="closeModal('loginModal')">&times;</button>
+        <div class="modal-header">
+            <div class="modal-icon"><i class="fa-solid fa-right-to-bracket"></i></div>
+            <h2>Welcome Back</h2>
+            <p>Login to manage your bookings</p>
+        </div>
+        <form onsubmit="doLogin(event)">
+            <div class="form-group">
+                <label>Email Address</label>
+                <div class="input-icon">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" id="loginEmail" placeholder="you@example.com" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <div class="input-icon">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="loginPwd" placeholder="••••••••" required>
+                </div>
+            </div>
+            <div id="loginError" class="alert alert-error" style="display:none"></div>
+            <button type="submit" class="btn-primary btn-full">Login</button>
+        </form>
+        <p class="modal-footer-text">Don't have an account? <a href="#" onclick="switchModal('loginModal','registerModal')">Sign Up</a></p>
+    </div>
+</div>
+
+<!-- REGISTER MODAL -->
+<div class="modal-overlay" id="registerModal">
+    <div class="modal">
+        <button class="modal-close" onclick="closeModal('registerModal')">&times;</button>
+        <div class="modal-header">
+            <div class="modal-icon"><i class="fa-solid fa-user-plus"></i></div>
+            <h2>Create Account</h2>
+            <p>Join thousands of happy customers</p>
+        </div>
+        <form onsubmit="doRegister(event)">
+            <div class="form-group">
+                <label>Full Name</label>
+                <div class="input-icon">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" id="regName" placeholder="John Doe" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Email Address</label>
+                <div class="input-icon">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" id="regEmail" placeholder="you@example.com" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <div class="input-icon">
+                    <i class="fa-solid fa-phone"></i>
+                    <input type="tel" id="regPhone" placeholder="+91 XXXXX XXXXX" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <div class="input-icon">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="regPwd" placeholder="Min 6 characters" required>
+                </div>
+            </div>
+            <div id="regError" class="alert alert-error" style="display:none"></div>
+            <div id="regSuccess" class="alert alert-success" style="display:none"></div>
+            <button type="submit" class="btn-primary btn-full">Create Account</button>
+        </form>
+        <p class="modal-footer-text">Already have an account? <a href="#" onclick="switchModal('registerModal','loginModal')">Login</a></p>
+    </div>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div class="modal-overlay" id="paymentModal">
+    <div class="modal modal-lg">
+        <button class="modal-close" onclick="closeModal('paymentModal')">&times;</button>
+        <div class="modal-header">
+            <div class="modal-icon"><i class="fa-solid fa-credit-card"></i></div>
+            <h2>Secure Payment</h2>
+            <p>Complete your booking payment</p>
+        </div>
+        <div class="payment-summary">
+            <div class="payment-row">
+                <span>Service</span><span id="pay_service">—</span>
+            </div>
+            <div class="payment-row">
+                <span>Booking ID</span><span id="pay_bid">—</span>
+            </div>
+            <div class="payment-row total-row">
+                <span>Total Amount</span><span id="pay_amount">₹0</span>
+            </div>
+        </div>
+        <div class="payment-methods">
+            <h4>Choose Payment Method</h4>
+            <div class="method-grid">
+                <label class="method-card">
+                    <input type="radio" name="payMethod" value="upi" checked>
+                    <div class="method-content">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                        <span>UPI</span>
+                    </div>
+                </label>
+                <label class="method-card">
+                    <input type="radio" name="payMethod" value="card">
+                    <div class="method-content">
+                        <i class="fa-solid fa-credit-card"></i>
+                        <span>Card</span>
+                    </div>
+                </label>
+                <label class="method-card">
+                    <input type="radio" name="payMethod" value="netbanking">
+                    <div class="method-content">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <span>Net Banking</span>
+                    </div>
+                </label>
+                <label class="method-card">
+                    <input type="radio" name="payMethod" value="cod">
+                    <div class="method-content">
+                        <i class="fa-solid fa-money-bill"></i>
+                        <span>Cash</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+        <div id="payError" class="alert alert-error" style="display:none"></div>
+        <button class="btn-primary btn-full" onclick="processPayment()">
+            <i class="fa-solid fa-shield-halved"></i> Pay Securely
+        </button>
+        <p class="secure-note"><i class="fa-solid fa-lock"></i> 256-bit SSL encrypted. Your data is safe.</p>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast"></div>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>
