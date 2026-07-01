@@ -7,6 +7,7 @@ A full-stack car maintenance booking platform — customers book services, owner
 - **Backend:** Python (Flask)
 - **Database:** SQLite
 
+  
 ## Features
 - Customer registration/login
 - Browse 12+ car services (maintenance, repair, cleaning, tyres, etc.)
