@@ -12,3 +12,4 @@ the score up partway. SUSPICION_SCORE_THRESHOLD (in config.py) should be
 set so that identity mismatch alone never crosses it — only identity +
 unusual movement together should trigger an alert.
 """
+from config import SUSPICION_SCORE_THRESHOLD, WEIGHTS
