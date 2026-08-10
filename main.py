@@ -95,3 +95,15 @@ def run(camera_source):
     cv2.destroyAllWindows()
 
 
+def _to_silhouette(person_crop):
+    """
+    Very simple placeholder silhouette extraction: grayscale + threshold.
+    Swap this for a proper background-subtraction or segmentation model
+    (e.g. MediaPipe Selfie Segmentation) for real deployment — this is
+    just enough to keep the gait pipeline runnable end-to-end.
+    """
+    gray = cv2.cvtColor(person_crop, cv2.COLOR_BGR2GRAY)
+    _, mask = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    return mask
+
+
