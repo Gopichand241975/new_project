@@ -26,3 +26,5 @@ from gait_id import GaitIdentifier
 from ir_check import IRModeMonitor, FACE_MODE, IR_GAIT_MODE
 from scoring_engine import compute_suspicion_score
 from alerts import send_alert, TamperMonitor
+
+GAIT_BUFFER_LEN = 20
