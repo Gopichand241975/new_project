@@ -106,8 +106,6 @@ def _to_silhouette(person_crop):
     _, mask = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
     return mask
 
-
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--camera", type=int, default=0, help="Camera index or path")
