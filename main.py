@@ -107,3 +107,9 @@ def _to_silhouette(person_crop):
     return mask
 
 
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--camera", type=int, default=0, help="Camera index or path")
+    args = parser.parse_args()
+    run(args.camera)
