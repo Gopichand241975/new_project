@@ -15,3 +15,13 @@ CAMERA_2_TARGET_FPS = 60     # request a high frame rate from camera 2 if the de
 DOOR_LOCK_ZONE = (400, 300, 700, 850)
 DWELL_TIME_ALERT_SECONDS = 8
 FORCED_ENTRY_MOTION_DWELL_SECONDS = 5   # dwell time in-zone that counts as "repetitive motion"
+
+
+
+# Suspicion scoring
+SUSPICION_SCORE_THRESHOLD = 70
+WEIGHTS = {
+    "long_dwell_time": 30,
+    "forced_entry_motion": 30,
+    "weapon_or_tool_detected": 40,
+}
