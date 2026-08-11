@@ -25,3 +25,11 @@ WEIGHTS = {
     "forced_entry_motion": 30,
     "weapon_or_tool_detected": 40,
 }
+
+# Telegram alert credentials
+TELEGRAM_BOT_TOKEN = "SET_ME"
+TELEGRAM_CHAT_ID = "SET_ME"
+
+# Weapon/tool detection model
+WEAPON_MODEL_PATH = "weapon_yolov8.pt"
+WEAPON_CONF_THRESHOLD = 0.5
