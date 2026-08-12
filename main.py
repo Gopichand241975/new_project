@@ -57,3 +57,65 @@ class Camera2Reader:
         self.running = False
         self.thread.join(timeout=1)
         self.cap.release()
+
+def run(camera_1_source, camera_2_source):
+    cap1 = cv2.VideoCapture(camera_1_source)
+    cam2 = Camera2Reader(camera_2_source, CAMERA_2_TARGET_FPS)
+
+    detector = PersonDetector()
+    tracker = PersonTracker()
+    weapon_detector = WeaponDetector()
+    tamper_monitor = TamperMonitor()
+
+    alerted_tracks = set()
+
+    while True:
+        ok, frame1 = cap1.read()
+        if not ok:
+            break
+
+        tamper_monitor.check(frame1, camera_name="Camera 1 (Door)")
+
+        detections = detector.detect(frame1)
+        tracks = tracker.update(detections, frame1)
+
+        frame2 = cam2.read()  # latest available high-fps frame, may be None early on
+
+        for t in tracks:
+            track_id = t["track_id"]
+            bbox = t["bbox"]
+
+            weapon = None
+            if frame2 is not None:
+                weapon = weapon_detector.detect_in_hand(frame2, bbox)
+
+            forced_entry_motion = t["dwell_time"] >= 5
+
+            result = compute_suspicion_score(
+                dwell_time=t["dwell_time"],
+                forced_entry_motion=forced_entry_motion,
+                weapon_detected=bool(weapon),
+            )
+
+            if result["triggered"] and track_id not in alerted_tracks:
+                snapshot_path = f"snapshot_{track_id}_{int(time.time())}.jpg"
+                cv2.imwrite(snapshot_path, frame1)
+                reasons = ", ".join(result["reasons"])
+                send_alert(
+                    f"Possible break-in attempt detected. "
+                    f"Score: {result['score']}. Reasons: {reasons}.",
+                    snapshot_path,
+                )
+                alerted_tracks.add(track_id)
+
+        if cv2.waitKey(1) & 0xFF == ord("q"):
+            break
+
+    cap1.release()
+    cam2.release()
+    cv2.destroyAllWindows()
+
+
+
+
+
