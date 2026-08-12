@@ -116,6 +116,9 @@ def run(camera_1_source, camera_2_source):
     cv2.destroyAllWindows()
 
 
-
-
-
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--camera1", type=int, default=CAMERA_1_SOURCE, help="Camera 1 (wide) index or path")
+    parser.add_argument("--camera2", type=int, default=CAMERA_2_SOURCE, help="Camera 2 (high-fps) index or path")
+    args = parser.parse_args()
+    run(args.camera1, args.camera2)
