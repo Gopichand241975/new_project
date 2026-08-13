@@ -10,3 +10,4 @@ against. Suspicion score is built from:
                                 e.g. jiggling/working at the lock)
     - weapon_or_tool_detected (Camera 2: tool/weapon detected near the hand)
 """
+from config import SUSPICION_SCORE_THRESHOLD, WEIGHTS
