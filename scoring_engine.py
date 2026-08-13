@@ -36,3 +36,7 @@ def compute_suspicion_score(dwell_time, forced_entry_motion, weapon_detected):
         "reasons": reasons,
     }
 
+
+def _dwell_alert_seconds():
+    from config import DWELL_TIME_ALERT_SECONDS
+    return DWELL_TIME_ALERT_SECONDS
