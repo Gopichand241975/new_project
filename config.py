@@ -5,3 +5,6 @@ Single camera, door-facing. Detects a person lingering or repeatedly
 working at the door lock and sends an alert based on dwell time and
 motion pattern alone.
 """
+
+# Camera source
+CAMERA_1_SOURCE = 0
