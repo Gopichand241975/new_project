@@ -19,3 +19,8 @@ WEIGHTS = {
     "long_dwell_time": 50,
     "forced_entry_motion": 50,
 }
+
+
+# Telegram alert credentials
+TELEGRAM_BOT_TOKEN = "SET_ME"
+TELEGRAM_CHAT_ID = "SET_ME"
