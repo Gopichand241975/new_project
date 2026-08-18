@@ -8,6 +8,7 @@ identity check — suspicion score is built purely from door-zone behaviour:
     - forced_entry_motion  (repetitive motion in the zone, e.g.
                              jiggling/working at the lock)
 """
+
 from config import SUSPICION_SCORE_THRESHOLD, WEIGHTS, DWELL_TIME_ALERT_SECONDS
 
 
