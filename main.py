@@ -64,3 +64,8 @@ def run(camera_source):
     cv2.destroyAllWindows()
 
 
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--camera", type=int, default=CAMERA_1_SOURCE, help="Camera index or path")
+    args = parser.parse_args()
+    run(args.camera)
