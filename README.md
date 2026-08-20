@@ -23,3 +23,16 @@ or is blocked for several seconds, it sends its own alert.
 | `scoring_engine.py` | Combines dwell time + forced-entry motion into a suspicion score; alert fires when the score crosses `SUSPICION_SCORE_THRESHOLD` |
 | `alerts.py` | Sends Telegram alerts (with snapshot) and monitors for camera tampering |
 | `main.py` | Wires the pipeline together and runs the main loop |
+
+## Not currently used
+
+These modules were built for earlier versions of the project (an indoor
+identity-based stage, and a two-camera weapon-detection stage) and are not
+wired into `main.py` in the current design. Left in the repo in case
+identity or weapon detection gets added back later:
+
+- `face_id.py`
+- `gait_id.py`
+- `ir_check.py`
+
+`weapon_detect.py` has been removed entirely.
