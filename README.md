@@ -8,3 +8,7 @@ detection in the current design — the alert is based purely on dwell time
 and motion pattern at the door.
 
 ## Pipeline
+
+`alerts.py` also runs a separate tamper check (`TamperMonitor`) on every
+frame, independent of the scoring pipeline above — if the feed goes dark
+or is blocked for several seconds, it sends its own alert.
