@@ -36,3 +36,14 @@ identity or weapon detection gets added back later:
 - `ir_check.py`
 
 `weapon_detect.py` has been removed entirely.
+
+
+## Setup
+
+1. Install dependencies (see `requirements.txt`).
+2. Set `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` in `config.py`.
+3. Adjust `DOOR_LOCK_ZONE` in `config.py` to match your camera's framing of the door/lock area.
+4. Run the system:
+```bash
+   python main.py --camera 0
+```
