@@ -47,3 +47,32 @@ identity or weapon detection gets added back later:
 ```bash
    python main.py --camera 0
 ```
+
+## Setup
+
+1. Install dependencies (see `requirements.txt`).
+2. Set `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` in `config.py`.
+3. Adjust `DOOR_LOCK_ZONE` in `config.py` to match your camera's framing of the door/lock area.
+4. Run the system:
+```bash
+   python main.py --camera 0
+```
+
+## Known limitations
+
+- A person who lingers near the door briefly (e.g. checking their phone, waiting for someone) may occasionally cross the dwell-time threshold and cause a false alert.
+- Detection is restricted to humans only (pets/vehicles ignored).
+- No identity check — the system can't distinguish a family member fumbling with keys from a stranger; it only reacts to behaviour at the door.
+
+## References
+
+See `Research_Papers_Download_Links.pdf` for the research backing the detection and tracking components used in this project.
+
+Suggested commit:
+
+bash
+git add README.md
+git commit -m "docs: update README for single-camera outside forced-entry design (drop weapon/identity references)"
+git push
+
+That closes out the "still out of sync" list. Remaining open items are weapon_detect.py deletion (command given last turn), the unused identity files (your call whether to keep or remove), and the newer additions — requirements.txt, tests/, and the report PDF update. Want any of those next?S
