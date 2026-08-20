@@ -6,3 +6,5 @@ someone working at the lock (jiggling, forcing, picking), the system sends
 an alert to the homeowner. There's no identity check and no weapon
 detection in the current design — the alert is based purely on dwell time
 and motion pattern at the door.
+
+## Pipeline
