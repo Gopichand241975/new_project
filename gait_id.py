@@ -1,17 +1,5 @@
 
-class GaitIdentifier:
-    def __init__(self, db_path="data/gait/", similarity_threshold=0.75):
-        self.db_path = db_path
-        self.similarity_threshold = similarity_threshold
-        self.known_geis = {}
-        self._load_known_geis()
 
-    def _load_known_geis(self):
-        if not os.path.isdir(self.db_path):
-            return
-        for fname in os.listdir(self.db_path):
-            if fname.endswith(".npy"):
-                self.known_geis[fname[:-4]] = np.load(os.path.join(self.db_path, fname))
 
     def register_gait(self, name, silhouette_frames):
         gei = compute_gei(silhouette_frames)
