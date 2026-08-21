@@ -1,9 +1,3 @@
-"
-
-def compute_gei(silhouette_frames):
-    stack = np.stack(silhouette_frames, axis=0).astype(np.float32)
-    return np.mean(stack, axis=0)
-
 
 class GaitIdentifier:
     def __init__(self, db_path="data/gait/", similarity_threshold=0.75):
