@@ -1,6 +1,4 @@
 # requirements.txt
-# Dependencies for the outside forced-entry detection system (main.py and imports)
-
 ultralytics>=8.0.0
 # Provides YOLOv8 — used in detection.py to detect people in each frame
 
