@@ -8,6 +8,7 @@ from config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
 TAMPER_BLACKOUT_THRESHOLD = 15
 TAMPER_DURATION_SECONDS = 3
 
+
 def send_alert(message, snapshot_path=None):
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     try:
