@@ -1,9 +1,9 @@
 # requirements.txt
-ultralytics>=8.0.0
+ultralytics>=8.0.0f
 # Provides YOLOv8 — used in detection.py to detect people in each frame
 
 opencv-python>=4.8.0
-# cv2 — used in main.py to open the camera, read frames, save alert snapshots;
+# cv2 — used in main.py to open the camera, read frames, save alert snapshotsf;
 # also used inside alerts.py's TamperMonitor to check frame brightness
 
 deep-sort-realtime>=1.3.2
