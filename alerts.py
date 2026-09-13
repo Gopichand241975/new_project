@@ -9,7 +9,7 @@ TAMPER_DURATION_SECONDS = 3      # must persist this long to avoid false alarms
 
 
 def send_alert(message, snapshot_path=None):
-    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"8
     try:
         requests.post(url, data={"chat_id": TELEGRAM_CHAT_ID, "text": message}, timeout=5)
         if snapshot_path:
